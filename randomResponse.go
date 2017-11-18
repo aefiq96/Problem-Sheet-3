@@ -4,6 +4,7 @@ import(
     "fmt"
     "math/rand"
     "time"
+    "regexp"
 )
 
 func main(){
@@ -27,10 +28,19 @@ func ElizaResponse(input string )string{
 
     //creating random response
     eliza := [] string{
-    "I’m not sure what you’re trying to say. Could you explain it to me?",
-    "How does that make you feel?",
-    "Why do you say that?",
+        "I’m not sure what you’re trying to say. Could you explain it to me?",
+        "How does that make you feel?",
+        "Why do you say that?",
     }
+
+    //Recognise “father”
+    matched, _ := regexp.MatchString(`(?i).*\bfather\b.*`,input)
+    //if father is true then return why dont you.... 
+    if matched == true{
+         return "why don't you tell me more about your father?"
+    }
+
+
     return eliza[rand.Intn(len(eliza))]
 }
 
