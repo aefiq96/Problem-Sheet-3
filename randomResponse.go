@@ -20,6 +20,15 @@ func main(){
     fmt.Println(ElizaResponse("I was my father’s favourite."))
     fmt.Println("My grandfather was French!")
     fmt.Println(ElizaResponse("My grandfather was French!"))
+    fmt.Println("I am happy.")
+    fmt.Println(ElizaResponse("I am happy."))
+    fmt.Println("I am not happy with your responses.")
+    fmt.Println(ElizaResponse("I am not happy with your responses."))
+    fmt.Println("I am not sure that you understand the effect that your questions are having on me.")
+    fmt.Println(ElizaResponse("I am not sure that you understand the effect that your questions are having on me."))
+    fmt.Println("I am supposed to just take what you’re saying at face value?")
+    fmt.Println(ElizaResponse("I am supposed to just take what you’re saying at face value?"))
+
 
     rand.Seed(time.Now().UTC().UnixNano())    
 }
@@ -40,6 +49,12 @@ func ElizaResponse(input string )string{
          return "why don't you tell me more about your father?"
     }
 
+    //part 3
+    re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+    
+    if re.MatchString(input) {
+		return re.ReplaceAllString(input, "How do you know you are $1?")
+	}
 
     return eliza[rand.Intn(len(eliza))]
 }
