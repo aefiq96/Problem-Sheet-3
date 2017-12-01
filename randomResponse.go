@@ -29,7 +29,10 @@ func main(){
     fmt.Println(ElizaResponse("I am not sure that you understand the effect that your questions are having on me."))
     fmt.Println("I am supposed to just take what you’re saying at face value?")
     fmt.Println(ElizaResponse("I am supposed to just take what you’re saying at face value?"))
+    fmt.Println("how are you eliza?")
+    fmt.Println(ElizaResponse("how are you eliza?"))
 
+    
 
     rand.Seed(time.Now().UTC().UnixNano())    
 }
@@ -53,11 +56,20 @@ func ElizaResponse(input string )string{
     //part 3
     // re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
     //“i am “, “I AM “, “I’m “, “Im “, “i’m “
-    re := regexp.MustCompile(`(?i)i(?:'|\sa)?m(.*)`)
-    
-    if re.MatchString(input) {
-		return re.ReplaceAllString(Reflect(input), "How do you know you are $1?")
-	}
+    re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+ 
+ 	if match := re.MatchString(input); match {
+ 
+ 		return Reflect(input)
+ 	}
+    //part 6
+    matc, _ := regexp.MatchString(`how are you(.*)`,input)
+    //if father is true then return why dont you.... 
+    if matc == true{
+         return "I am good what about you?"
+    }
+
+
 
     return eliza[rand.Intn(len(eliza))]
 }
@@ -65,8 +77,8 @@ func ElizaResponse(input string )string{
 //https://gist.github.com/ianmcloughlin/c4c2b8dc586d06943f54b75d9e2250fe
 func Reflect(input string) string {
 	// Split the input on word boundaries.
-	boundaries := regexp.MustCompile(`\b`)
-	tokens := boundaries.Split(input, -1)
+    
+	tokens := strings.Split(input, " ")
 	
 	// List the reflections.
 	reflections := [][]string{
@@ -74,7 +86,6 @@ func Reflect(input string) string {
  		{"you’re", "i am"},
  		{"I", "you"},
  		{"you", "I"},
-        {"re", "my"},
  		{"me", "you"},
         {"am", "are"},
 	}
@@ -90,5 +101,6 @@ func Reflect(input string) string {
 	}
 	
 	// Put the tokens back together.
-	return strings.Join(tokens, ``)
+    joinString := strings.Join(tokens, " ")
+    return fmt.Sprintf("How do you know %s?", joinString)
 }
