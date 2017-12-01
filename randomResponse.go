@@ -31,6 +31,10 @@ func main(){
     fmt.Println(ElizaResponse("I am supposed to just take what you’re saying at face value?"))
     fmt.Println("how are you eliza?")
     fmt.Println(ElizaResponse("how are you eliza?"))
+     fmt.Println("Hello eliza?")
+    fmt.Println(ElizaResponse("Hello eliza?"))
+     fmt.Println("bye eliza?")
+    fmt.Println(ElizaResponse("bye eliza?"))
 
     
 
@@ -64,10 +68,21 @@ func ElizaResponse(input string )string{
  	}
     //part 6
     matc, _ := regexp.MatchString(`how are you(.*)`,input)
-    //if father is true then return why dont you.... 
+    //if how are you is true then return .... 
     if matc == true{
          return "I am good what about you?"
     }
+
+    match, _ := regexp.MatchString(`Hello (.*)`,input)
+    if match == true{
+         return "Hello how are you?"
+    }
+
+    matched2, _ := regexp.MatchString(`bye (.*)`,input)
+    if matched2 == true{
+         return "bye see you later"
+    }
+
 
 
 
