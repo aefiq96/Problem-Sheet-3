@@ -5,6 +5,7 @@ import(
     "math/rand"
     "time"
     "regexp"
+    "strings"
 )
 
 func main(){
@@ -55,9 +56,39 @@ func ElizaResponse(input string )string{
     re := regexp.MustCompile(`(?i)i(?:'|\sa)?m(.*)`)
     
     if re.MatchString(input) {
-		return re.ReplaceAllString(input, "How do you know you are $1?")
+		return re.ReplaceAllString(Reflect(input), "How do you know you are $1?")
 	}
 
     return eliza[rand.Intn(len(eliza))]
 }
 
+//https://gist.github.com/ianmcloughlin/c4c2b8dc586d06943f54b75d9e2250fe
+func Reflect(input string) string {
+	// Split the input on word boundaries.
+	boundaries := regexp.MustCompile(`\b`)
+	tokens := boundaries.Split(input, -1)
+	
+	// List the reflections.
+	reflections := [][]string{
+		{"your", "my"},
+ 		{"you’re", "i am"},
+ 		{"I", "you"},
+ 		{"you", "I"},
+        {"re", "my"},
+ 		{"me", "you"},
+        {"am", "are"},
+	}
+	
+	// Loop through each token, reflecting it if there's a match.
+	for i, token := range tokens {
+		for _, reflection := range reflections {
+			if matched, _ := regexp.MatchString(reflection[0], token); matched {
+				tokens[i] = reflection[1]
+				break
+			}
+		}
+	}
+	
+	// Put the tokens back together.
+	return strings.Join(tokens, ``)
+}
