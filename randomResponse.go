@@ -50,7 +50,9 @@ func ElizaResponse(input string )string{
     }
 
     //part 3
-    re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+    // re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+    //“i am “, “I AM “, “I’m “, “Im “, “i’m “
+    re := regexp.MustCompile(`(?i)i(?:'|\sa)?m(.*)`)
     
     if re.MatchString(input) {
 		return re.ReplaceAllString(input, "How do you know you are $1?")
